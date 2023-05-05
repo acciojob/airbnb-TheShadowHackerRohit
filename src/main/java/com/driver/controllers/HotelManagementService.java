@@ -27,7 +27,7 @@ public class HotelManagementService {
         }
         List<String> hotelsByname = hotelManagementRepository.getAllHotelName();
         if(hotelsByname.contains(hotel.getHotelName())){
-            return "Failure";
+            return "FAILURE";
         }
         hotelManagementRepository.saveHotel(hotel);
         return "SUCCESS";
@@ -64,17 +64,24 @@ public class HotelManagementService {
 
 
     }
+/*
+    testGetHotelWithMaxFacilitiesWhereNoFacilities  Time elapsed: 0.007 s  <<< FAILURE!
+    org.opentest4j.AssertionFailedError: expected: <> but was: <Tushar>
+    at com.driver.test.TestCases.testGetHotelWithMaxFacilitiesWhereNoFacilities(TestCases.java:59)
+    */
 
     public String getHotelWithMostFacilities() {
         //Out of all the hotels we have added so far, we need to find the hotelName with most no of facilities
-        //Incase there is a tie return the lexicographically smaller hotelName
-        //Incase there is not even a single hotel with at least 1 facility return "" (empty string)
+        //In case there is a tie return the lexicographically smaller hotelName
+        //In case there is not even a single hotel with at least 1 facility return "" (empty string)
 
         int maxNumberOfFacility = hotelManagementRepository.getMaxFacility();
 
         List<String> hotelList = hotelManagementRepository.getAllHotelNameByNumberOfFacility(maxNumberOfFacility);
 
-
+        if(maxNumberOfFacility == 0){
+            return "";
+        }
         if(hotelList.size() == 1){
             return hotelList.get(0);
 
